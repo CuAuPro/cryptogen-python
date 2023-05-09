@@ -1,0 +1,23 @@
+{
+    "clients": [
+        {
+            "path":     "generated_certificates/<cloud_name>/",
+            "alias":    "<client1_alias>",
+            "passcode": "<passcode>",
+            "ca":       true,
+            "crt":      true,
+            "key":      true
+
+        },
+        {
+            "path":     "generated_certificates/<cloud_name>/",
+            "alias":    "<client2_alias>",
+            "passcode": "<passcode>",
+            "ca":       true,
+            "crt":      true,
+            "key":      true
+
+        }
+    ]
+
+}

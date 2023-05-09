@@ -1,0 +1,11 @@
+{
+    "store_folder":         "generated_certificates/<cloud_name>/",
+    "signing_cert_path":   "<path_to_master_cert>",
+    "passcode":             "123456",
+
+    "new_alias":            "<cloud_name>",
+    "validity_period":      "10 years",
+    "new_passcode":         "<passcode>",
+
+    "cloud_operator":       "<cloud_operator>"
+}

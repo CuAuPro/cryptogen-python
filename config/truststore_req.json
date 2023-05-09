@@ -1,0 +1,11 @@
+{
+    "store_folder":         "generated_certificates/<cloud_name>/",
+    "signing_cert_path":    "generated_certificates/<cloud_name>/<new_alias_of_cloud_cert>",
+    "passcode":             "<passcode_of_cloud_cert>",
+
+    "new_alias":            "truststore",
+    "new_passcode":         "<passcode>",
+
+    "keytool_path":         "<path_to_keytool>"
+
+}
