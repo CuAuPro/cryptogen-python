@@ -13,6 +13,7 @@ Arrowhead (and its continuation, [Productive4.0](https://productive40.eu/)) is a
     * [Truststore with Python script](#truststore_python)
     * [Truststore with KeyStore Explorer](#truststore_manual)
 - [Extract PKCS12 certificate](#extract_pkcs12)
+- [MCU certificate header file generation](#header_generation)
 
 # Acknowledgements <a id='acknowledgements'></a>
 
@@ -219,7 +220,7 @@ To generate seperate files, you will need to use the `extract_pkcs12_certs.py` s
 To generate the certificates, follow these steps:
 
 
-1. Edit a configuration file named `config/truststore_req.json` with the following content:
+1. Edit a configuration file named `config/extract_pkcs12_req.json` with the following content:
 
 ```json
 {
@@ -272,3 +273,51 @@ python extract_pkcs12_certs.py -p <path_to_config_file>
 The `-p` option is optional and can be used to specify the path to the configuration file. If you do not use the `-p` option, the script will look for a file named `config/extract_pkcs12_req.json`.
 
 3. After running the command, the script will generate certificates in `path/alias`.
+
+
+# MCU certificate header file generation <a id='header_generation'></a>
+
+
+This script loads a extracted exported certificate, private key and (or) all additional CA certificates for client and generates `.h` file that can be used for MCUs.
+
+To generate seperate files, you will need to use the `gen_mcu_header.py` script with a configuration file. Before running this script, make sure you have all the dependencies installed.
+
+To generate the header file `.h`, follow these steps:
+
+
+1. Edit a configuration file named `config/gen_mcu_header_req.json` with the following content:
+
+```json
+{
+    "clients": [
+        {
+            "path":     "generated_certificates/<cloud_name>/",
+            "alias":    "<client1_alias>"
+        },
+        {
+            "path":     "generated_certificates/<cloud_name>/",
+            "alias":    "<client2_alias>"
+        }
+    ]
+
+}
+```
+
+Here is what each option in the configuration file does:
+
+ - `path`: The folder where the folder of files `.crt`, `.key` and `.ca` are be stored.
+
+ - `alias`:  The alias of client.
+
+
+
+2. Run the following command to generate the client certificates:
+
+
+```bash
+python gen_mcu_header.py -p <path_to_config_file>
+```
+The `-p` option is optional and can be used to specify the path to the configuration file. If you do not use the `-p` option, the script will look for a file named `config/gen_mcu_header_req.json`.
+
+3. After running the command, the script will generate certificate header `.h` file in `path/alias`.
+
