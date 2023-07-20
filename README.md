@@ -27,13 +27,13 @@ cryptography==40.0.2
 
 # Intermediate (cloud) certificate generation <a id='cloud_generation'></a>
 
-To generate cloud certificates, you will need to use the `gen_cloud_certify.py` script with a configuration file. Before running this script, make sure you have all the dependencies installed.
+To generate cloud certificates, you will need to use the `gen_cloud_cert.py` script with a configuration file. Before running this script, make sure you have all the dependencies installed.
 
 To generate the certificates, follow these steps:
 
 1. Obtain the root (`master.p12`) self-signed certificate.
 
-2. Edit a configuration file named `config/cloud_certifi_req.json` with the following content:
+2. Edit a configuration file named `config/cloud_cert_req.json` with the following content:
 
 ```json
 {
@@ -71,9 +71,9 @@ new_alias: The alias for the new cloud certificate.
 
 
 ```bash
-python gen_cloud_certify.py -p <path_to_config_file>
+python gen_cloud_cert.py -p <path_to_config_file>
 ```
-The `-p` option is optional and can be used to specify the path to the configuration file. If you do not use the `-p` option, the script will look for a file named `config/cloud_certifi_req.json`.
+The `-p` option is optional and can be used to specify the path to the configuration file. If you do not use the `-p` option, the script will look for a file named `config/cloud_cert_req.json`.
 
 4. After running the command, the script will generate certificates in `store_folder`.
 
@@ -81,13 +81,13 @@ The `-p` option is optional and can be used to specify the path to the configura
 
 # End-entity (client) certificate generation <a id='client_generation'></a>
 
-To generate client certificates, you will need to use the `gen_client_certify.py` script with a configuration file. Before running this script, make sure you have all the dependencies installed.
+To generate client certificates, you will need to use the `gen_client_cert.py` script with a configuration file. Before running this script, make sure you have all the dependencies installed.
 
 To generate the certificates, follow these steps:
 
 1. Obtain the intermediate (cloud) self-signed certificate.
 
-2. Edit a configuration file named `config/client_certifi_req.json` with the following content:
+2. Edit a configuration file named `config/client_cert_req.json` with the following content:
 
 ```json
 {
@@ -141,9 +141,9 @@ Here is what each option in the configuration file does:
 
 
 ```bash
-python gen_client_certify.py -p <path_to_config_file>
+python gen_client_cert.py -p <path_to_config_file>
 ```
-The `-p` option is optional and can be used to specify the path to the configuration file. If you do not use the `-p` option, the script will look for a file named `config/client_certifi_req.json`.
+The `-p` option is optional and can be used to specify the path to the configuration file. If you do not use the `-p` option, the script will look for a file named `config/client_cert_req.json`.
 
 4. After running the command, the script will generate certificates in `store_folder`.
 
@@ -285,7 +285,7 @@ To generate seperate files, you will need to use the `gen_mcu_header.py` script 
 To generate the header file `.h`, follow these steps:
 
 
-1. Edit a configuration file named `config/gen_mcu_header_req.json` with the following content:
+1. Edit a configuration file named `config/mcu_header_req.json` with the following content:
 
 ```json
 {
@@ -315,9 +315,16 @@ Here is what each option in the configuration file does:
 
 
 ```bash
-python gen_mcu_header.py -p <path_to_config_file>
+python gen_mcu_header_pem.py -p <path_to_config_file>
 ```
-The `-p` option is optional and can be used to specify the path to the configuration file. If you do not use the `-p` option, the script will look for a file named `config/gen_mcu_header_req.json`.
+or
+```bash
+python gen_mcu_header_der.py -p <path_to_config_file>
+```
+
+The `-p` option is optional and can be used to specify the path to the configuration file. If you do not use the `-p` option, the script will look for a file named `config/mcu_header_req.json`.
+
 
 3. After running the command, the script will generate certificate header `.h` file in `path/alias`.
+
 
