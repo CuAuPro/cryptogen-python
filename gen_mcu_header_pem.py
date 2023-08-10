@@ -17,15 +17,8 @@ def modify_lines(lines):
     modified_lines.append(modified_line)    
     return modified_lines
     
-def extract_pkcs12(args):
-    
-    config_path = args.config_path
+def gen_mcu_header_pem(config):
 
-    # Open the JSON file
-    with open(config_path) as f:
-        # Load the JSON data
-        config = json.load(f)
-        
     
     clients = config["clients"]
 
@@ -98,8 +91,15 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--config-path", type=str, default="config/gen_mcu_header_req.json",
                         help="Path to config file.")
     args = parser.parse_args()
+    
+    config_path = args.config_path
 
+    # Open the JSON file
+    with open(config_path) as f:
+        # Load the JSON data
+        config = json.load(f)
+        
     logger.init_logger(print_to_stdout=True)
     logging.info('Start generating header file for MCU certificate(s).')
-    extract_pkcs12(args)
+    gen_mcu_header_pem(config)
     logging.info('End generating header file for MCU certificate(s).')

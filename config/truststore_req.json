@@ -6,6 +6,7 @@
     "new_alias":            "truststore",
     "new_passcode":         "<passcode>",
 
-    "keytool_path":         "<path_to_keytool>"
+    "keytool_path":         "<path_to_keytool>",
+    "gui":                  false
 
 }

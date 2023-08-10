@@ -7,15 +7,10 @@ import subprocess
 import argparse
 import logger
 import logging
+import base64
 
-def gen_truststore(args):
-
-    config_path = args.config_path
-    # Open the JSON file
-    with open(config_path) as f:
-        # Load the JSON data
-        config = json.load(f)
-        
+def gen_truststore(config):
+ 
     store_folder = config["store_folder"]
     signing_cert_path = config["signing_cert_path"]
     passcode = config["passcode"]
@@ -28,11 +23,17 @@ def gen_truststore(args):
     if passcode is not None:
         passcode = bytes(passcode, 'utf-8')
         
-    # Load the intermediate certificate and private key from the .p12 file
-    with open(signing_cert_path, "rb") as f:
-        p12_data = f.read()
-        
+    if config["gui"]:
+        p12_data = base64.b64decode(config["signing_cert_path"])
+    else:
+        signing_cert_path = config["signing_cert_path"]
+
+        # Load the signing certificate and private key from the .p12 file
+        with open(signing_cert_path, "rb") as f:
+            p12_data = f.read()
+
     private_key, cert, additional_certs = load_key_and_certificates(p12_data, passcode)
+    
     signing_cert_cn = cert.subject.get_attributes_for_oid(x509.NameOID.COMMON_NAME)[0].value
     # Build a certificate chain from the intermediate and root certificates
     chain = [cert]
@@ -72,9 +73,16 @@ if __name__ == "__main__":
                         help="Path to config file.")
     args = parser.parse_args()
 
+
+    config_path = args.config_path
+    # Open the JSON file
+    with open(config_path) as f:
+        # Load the JSON data
+        config = json.load(f)
+        
     logger.init_logger(print_to_stdout=True)
     logging.info('Start generation truststore.')
-    gen_truststore(args)
+    gen_truststore(config)
     logging.info('End generation truststore.')
 
     

@@ -18,6 +18,7 @@
             "key":      true
 
         }
-    ]
+    ],
+    "gui":                  false
 
 }

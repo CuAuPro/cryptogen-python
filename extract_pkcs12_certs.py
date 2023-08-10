@@ -6,15 +6,9 @@ import argparse
 import logger
 import logging
 
-def extract_pkcs12(args):
-    
-    config_path = args.config_path
-    # Open the JSON file
-    with open(config_path) as f:
-        # Load the JSON data
-        config = json.load(f)
+def extract_pkcs12(config):
         
-    
+
     clients = config["clients"]
 
 
@@ -82,8 +76,14 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--config-path", type=str, default="config/extract_pkcs12_req.json",
                         help="Path to config file.")
     args = parser.parse_args()
+    
+    config_path = args.config_path
+    # Open the JSON file
+    with open(config_path) as f:
+        # Load the JSON data
+        config = json.load(f)
 
     logger.init_logger(print_to_stdout=True)
     logging.info('Start extracting pkcs12 certificate(s).')
-    extract_pkcs12(args)
+    extract_pkcs12(config)
     logging.info('End extracting pkcs12 certificate(s).')

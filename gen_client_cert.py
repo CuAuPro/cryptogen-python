@@ -10,18 +10,11 @@ import json
 import argparse
 import logger
 import logging
+import base64
 
-def gen_client_certify(args):
-    
-    config_path = args.config_path
-    # Open the JSON file
-    with open(config_path) as f:
-        # Load the JSON data
-        config = json.load(f)
-        
+def gen_client_cert(config):
     
     store_folder = config["store_folder"]
-    signing_cert_path = config["signing_cert_path"]
     passcode = config["passcode"]
     
     clients = config["clients"]
@@ -30,9 +23,14 @@ def gen_client_certify(args):
     if passcode is not None:
         passcode = bytes(passcode, 'utf-8')
 
-    # Load the signing certificate and private key from the .p12 file
-    with open(signing_cert_path, "rb") as f:
-        p12_data = f.read()
+    if config["gui"]:
+        p12_data = base64.b64decode(config["signing_cert_path"])
+    else:
+        signing_cert_path = config["signing_cert_path"]
+
+        # Load the signing certificate and private key from the .p12 file
+        with open(signing_cert_path, "rb") as f:
+            p12_data = f.read()
 
     private_key, cert, additional_certs = load_key_and_certificates(p12_data, passcode)
 
@@ -152,7 +150,13 @@ if __name__ == "__main__":
                         help="Path to config file.")
     args = parser.parse_args()
 
+    config_path = args.config_path
+    # Open the JSON file
+    with open(config_path) as f:
+        # Load the JSON data
+        config = json.load(f)
+        
     logger.init_logger(print_to_stdout=True)
     logging.info('Start generation cloud certificate(s).')
-    gen_client_certify(args)
+    gen_client_cert(config)
     logging.info('End generation cloud certificate(s).')

@@ -7,5 +7,6 @@
     "validity_period":      "10 years",
     "new_passcode":         "<passcode>",
 
-    "cloud_operator":       "<cloud_operator>"
+    "cloud_operator":       "<cloud_operator>",
+    "gui":                  false
 }
